@@ -18,7 +18,9 @@ public:
 	void render(Renderer* renderer);
 	void update();
 	void keyActive(char c);
-	bool mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
+	float mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
+	void setMode(int button);
+	int getMode(){return mode;}
 private:
 	float x,y,z;
 	int mode;// 0->none 1->touched 2->selected

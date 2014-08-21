@@ -34,6 +34,26 @@ void myCourserPositionCallback(GLFWwindow *window, double x, double y){
 	game_ptr->mouseActive(0,x,y);
 }
 
+void myMouseButtonCallback(GLFWwindow *window, int button, int action, int mod){
+	if(button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS){
+		game_ptr->mouseActive(1,0,0);
+	}
+	else if(button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE){
+		//game_ptr->mouseActive(-1,0,0);
+	}
+}
+
+void myWindowResizeCallback(GLFWwindow *window, int width, int hieght){
+
+	if(width<640 || hieght<480){
+		width=640; hieght=480;
+		glfwSetWindowSize(window, width, hieght);
+	}
+	game_ptr -> windowResize(width, hieght);
+}
+
+
+
 int main() {
 
 	if (!glfwInit()) {
@@ -56,6 +76,8 @@ int main() {
 
 	glfwSetKeyCallback(game.getWindow(),myKeyCallback);
 	glfwSetCursorPosCallback(game.getWindow(),myCourserPositionCallback);
+	glfwSetMouseButtonCallback(game.getWindow(),myMouseButtonCallback);
+	glfwSetWindowSizeCallback(game.getWindow(), myWindowResizeCallback);
 
 	game.init();
 	game.gameActive();

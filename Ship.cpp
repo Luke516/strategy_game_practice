@@ -15,7 +15,7 @@
 Ship::Ship(float xx, float yy,float zz):x(xx),y(yy),z(zz),mode(0),
 		model_matrix(glm::mat4(1.0f)),vbo_vertex(0),vbo_uv(0),vbo_normal(0)
 {
-	MyObjLoader::LoadObjFromFileWithAABB("cube00.obj", &obj_vertex, &obj_uv, &obj_normal,
+	MyObjLoader::LoadObjFromFileWithAABB("ship00.obj", &obj_vertex, &obj_uv, &obj_normal,
 			&aabb_bottom_left, &aabb_top_right);
 	glGenBuffers(1, &vbo_vertex);
 	glGenBuffers(1, &vbo_uv);
@@ -62,7 +62,7 @@ void Ship::render(Renderer* renderer){
 	glDrawArrays(GL_TRIANGLES, 0, obj_vertex.size());
 }
 
-bool Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
+float Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 	float t;
 	float tx1 = (aabb_bottom_left.x - pos.x)/dir.x;
 	float tx2 = (aabb_top_right.x - pos.x)/dir.x;
@@ -76,21 +76,19 @@ bool Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 	if (tmax < 0)
 	{
 	    t = tmax;
-	    printf("false!\n");
-	    mode = 0;
-	    return false;
+	    return -1;
 	}
 	// if tmin > tmax, ray doesn't intersect AABB
 	if (tmin > tmax)
 	{
 	    t = tmax;
-	    printf("false!\n");
-	    mode = 0;
-	    return false;
+	    return -1;
 	}
 
 	t = tmin;
-	mode = 1;
-	printf("true!\n");
-	return true;
+	return t;
+}
+
+void Ship::setMode(int button){
+	mode = button;
 }

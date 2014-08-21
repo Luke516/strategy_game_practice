@@ -11,7 +11,7 @@
 
 class MyWindow {
 public:
-	MyWindow(int hieght,int width);
+	MyWindow(int width,int height);
 	bool shouldClose(){return glfwWindowShouldClose(window);}
 	void swapBuffer(){glfwSwapBuffers(window);}
 	int getWindowHeight(){return h;}

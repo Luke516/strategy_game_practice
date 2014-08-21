@@ -22,6 +22,8 @@ public:
 	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
 private:
 	std::vector<Ship> ship_list;
+	std::vector<unsigned int> touched_list;
+	std::vector<unsigned int> selected_list;
 };
 
 #endif /* FIELD_H_ */

@@ -23,6 +23,7 @@ public:
 	void setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode);
 	void push(BasicObject *np);
 	void useProgram(unsigned int id);
+	void resize();
 	unsigned int createShaderProgram(const char* vert_path, const char* frag_path);
 	glm::vec3 getCameraPosition(){return camera_position;}
 	glm::vec3 getCameraLookAtPosition(){return camera_lookat_position;}
@@ -34,6 +35,7 @@ private:
 	GLfloat fovy;
 	GLfloat z_near;
 	GLfloat light;
+	GLfloat window_proportion;
 	glm::vec3 camera_position;
 	glm::vec3 camera_lookat_position;
 	glm::vec3 camera_up;

@@ -22,6 +22,7 @@ public:
 	void push(BasicObject *np);
 	void render();
 	void update();
+	void resize(){renderer.resize();}
 	void keyActive(char c);
 	void mouseActive(int button, double x_pos, double y_pos);
 private:

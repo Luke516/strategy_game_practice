@@ -12,9 +12,9 @@
 #include "MyShader.h"
 
 Renderer::Renderer(MyWindow* w):
-		fovy(45.0),z_near(0.1),light(5),
-		camera_position(0,0,40),camera_lookat_position(0,0,0),camera_up(0,1,0),
-		projection_matrix(glm::perspective(fovy, 4.0f / 3.0f, z_near, 100.0f)),
+		fovy(45.0),z_near(0.1),light(5),window_proportion(4.0f / 3.0f),
+		camera_position(12,12,-24),camera_lookat_position(0,0,0),camera_up(0,1,0),
+		projection_matrix(glm::perspective(fovy, window_proportion, z_near, 100.0f)),
 		view_matrix (glm::lookAt(camera_position,camera_lookat_position,camera_up)),
 		lightColor(255,0,0),LightPosition_worldspace(2,2,0)
 {
@@ -72,6 +72,7 @@ void Renderer::render(){
 void Renderer::setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode){
 	if(mode == 0)light = 5;
 	else if(mode ==1)light = 10;
+	else if(mode ==2)light = 20;
 
 	glActiveTexture(GL_TEXTURE0 + texture_unif);
 	glUniform1i(texture_unif_location, texture_unif);
@@ -88,4 +89,14 @@ void Renderer::setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int 
 
 void Renderer::push(BasicObject *np){
 	render_list.push_back(np);
+}
+
+void Renderer::resize(){
+	int w = window->getWindowWidth();
+	int h = window->getWindowHeight();
+	printf("w=%d h=%d\n",w,h);
+	glViewport(0,0,w,h);
+	window_proportion = (float)w/h;
+	projection_matrix = glm::mat4(glm::perspective(fovy, window_proportion, z_near, 100.0f));
+	pv_matrix = projection_matrix*view_matrix;
 }

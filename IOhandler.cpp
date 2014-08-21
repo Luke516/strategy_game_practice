@@ -39,13 +39,15 @@ void IOhandler::keyActive(char c){
 	keyboard.keyActive(c);
 }
 void IOhandler::mouseActive(int button, double x_pos, double y_pos){
+	if(button != 0)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
 
+	//printf("x:%f y:%f\n",x_pos,y_pos);
 	int window_height = window_ptr -> getWindowHeight();
 	int window_width = window_ptr -> getWindowWidth();
-	printf("window_height: %d  window_width: %d\n",window_height,window_width);
-	GLfloat x = (x_pos/window_height)*2 - 1;
-	GLfloat y = 1 - (y_pos/window_width)*2;
-	printf("x=%f y=%f\n",x,y);
+	//printf("window_height: %d  window_width: %d\n",window_height,window_width);
+	GLfloat x = (x_pos/window_width)*2 - 1;
+	GLfloat y = (y_pos/window_height)*2 - 1;///??!!
+	//printf("x=%f y=%f\n",x,y);
 	GLfloat z_near = renderer.getZnear();
 	GLfloat rad = renderer.getFovy()/180 *3.1415926;
 
@@ -58,8 +60,8 @@ void IOhandler::mouseActive(int button, double x_pos, double y_pos){
 
 	w = glm::normalize(w);
 	h = glm::normalize(h);
-	printf("w: %f, %f, %f\n",w[0],w[1],w[2]);
-	printf("h: %f, %f, %f\n",h[0],h[1],h[2]);
+	//printf("w: %f, %f, %f\n",w[0],w[1],w[2]);
+	//printf("h: %f, %f, %f\n",h[0],h[1],h[2]);
 
 	view = glm::normalize(view);
 
@@ -69,7 +71,7 @@ void IOhandler::mouseActive(int button, double x_pos, double y_pos){
 	w = w * w_length;
 	glm::vec3 pos = camera_position + view * z_near + h * y + w * x;
 	glm::vec3 dir = pos - camera_position;
-	printf("pos: %f,%f,%f  dir:%f %f %f\n",pos[0],pos[1],pos[2],dir[0],dir[1],dir[2]);
+	//printf("pos: %f,%f,%f  dir:%f %f %f\n",pos[0],pos[1],pos[2],dir[0],dir[1],dir[2]);
 
 	keyboard.mouseActive(button, pos, dir);
 

@@ -17,7 +17,7 @@ enum enum_state{
 
 class Game {
 public:
-	Game(int window_width=640, int window_hieght=480);
+	Game(int window_width=640, int window_height=480);
 	void init();
 	void changeNextState(enum_state next);
 	void changeState();
@@ -25,6 +25,7 @@ public:
 	void initState();
 	void keyActive(char c);
 	void mouseActive(int button, double x_pos, double y_pos);
+	void windowResize(int width, int height);
 	GLFWwindow* getWindow(){return window.getWindow();}
 private:
 	bool terminate;
