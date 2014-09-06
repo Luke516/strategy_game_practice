@@ -20,10 +20,15 @@ public:
 	void init();
 	void render();
 	void clear();
-	void setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode);
+	void setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode=0);
 	void push(BasicObject *np);
 	void useProgram(unsigned int id);
 	void resize();
+	void cameraScale(float dis);
+	void cameraTranslate(bool parallel, float dis);
+	void cameraRotate();//not complete
+	void keyActive(int key);
+
 	unsigned int createShaderProgram(const char* vert_path, const char* frag_path);
 	glm::vec3 getCameraPosition(){return camera_position;}
 	glm::vec3 getCameraLookAtPosition(){return camera_lookat_position;}

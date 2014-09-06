@@ -18,7 +18,7 @@ public:
 	virtual ~BasicObject(){}
 	virtual void render(Renderer *renderer)=0;
 	virtual void update()=0;
-	virtual void keyActive(char c)=0;
+	virtual void keyActive(int key, int action)=0;
 	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir)=0;
 };
 

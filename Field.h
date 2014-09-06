@@ -9,6 +9,7 @@
 #define FIELD_H_
 #include <vector>
 #include "Ship.h"
+#include "HexMap.h"
 #include "Renderer.h"
 #include "BasicObject.h"
 
@@ -18,9 +19,10 @@ public:
 	virtual ~Field();
 	virtual void render(Renderer *renderer);
 	virtual void update();
-	virtual void keyActive(char c);
+	virtual void keyActive(int key, int action);
 	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
 private:
+	HexMap map;
 	std::vector<Ship> ship_list;
 	std::vector<unsigned int> touched_list;
 	std::vector<unsigned int> selected_list;

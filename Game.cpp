@@ -11,7 +11,8 @@
 #include "Field.h"
 
 Game::Game(int window_width, int window_height)
-	:terminate(false),state(state_none),next_state(state_game),window(window_width,window_height),io_handler(&window)
+	:loop_start_time(0),loop_end_time(0),loop_elapsed_time(10),terminate(false),
+	 state(state_none),next_state(state_game),window(window_width,window_height),io_handler(&window)
 {
 }
 
@@ -24,8 +25,13 @@ void Game::gameActive(){
 		if(next_state != state_none){
 			changeState();
 		}
+		loop_start_time = clock();
 		io_handler.update();
 		io_handler.render();
+		loop_end_time = clock();
+		while(loop_end_time - loop_start_time < loop_elapsed_time){
+			loop_end_time = clock();
+		}
 	}
 	return;
 }
@@ -50,8 +56,8 @@ void Game::initState(){
 	return;
 }
 
-void Game::keyActive(char c){
-	io_handler.keyActive(c);
+void Game::keyActive(int key, int action){
+	io_handler.keyActive(key, action);
 }
 void Game::mouseActive(int button, double x_pos, double y_pos){
 	io_handler.mouseActive(button, x_pos, y_pos);

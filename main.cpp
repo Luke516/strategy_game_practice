@@ -23,23 +23,38 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Game* game_ptr;
+bool mouse_right_button_pressed = false;
+bool mouse_middle_button_pressed = false;
+bool mouse_left_button_pressed = false;
 
 void  myKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-  if (key == 'A' and action == GLFW_PRESS)
-    printf("A was pressed");
+ {
+	game_ptr->keyActive(key, action);
+
 }
 
 void myCourserPositionCallback(GLFWwindow *window, double x, double y){
 	game_ptr->mouseActive(0,x,y);
 }
 
-void myMouseButtonCallback(GLFWwindow *window, int button, int action, int mod){
+void myMouseButtonCallback(GLFWwindow *window, int button, int action, int mods){
 	if(button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS){
+		mouse_left_button_pressed = true;
 		game_ptr->mouseActive(1,0,0);
 	}
 	else if(button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE){
+		mouse_left_button_pressed = false;
 		//game_ptr->mouseActive(-1,0,0);
+	}
+}
+
+void myScrollCallback(GLFWwindow *window, double xoffset, double yoffset){
+	printf("scroll-- x:%lf y:%lf\n",xoffset,yoffset);
+	if(yoffset > 0){
+		game_ptr->mouseActive(4,0,0);
+	}
+	else if(yoffset < 0){
+		game_ptr->mouseActive(-4,0,0);
 	}
 }
 
@@ -78,6 +93,7 @@ int main() {
 	glfwSetCursorPosCallback(game.getWindow(),myCourserPositionCallback);
 	glfwSetMouseButtonCallback(game.getWindow(),myMouseButtonCallback);
 	glfwSetWindowSizeCallback(game.getWindow(), myWindowResizeCallback);
+	glfwSetScrollCallback(game.getWindow(), myScrollCallback);
 
 	game.init();
 	game.gameActive();
@@ -88,6 +104,14 @@ int main() {
 }
 
 
-
+/*
+mouseActive:button:
+0->no button
+1->left button pressed       -1->left button released
+2->right button pressed		 -2->right button released
+3->middle button pressed     -3->middle button released
+4->scroll up
+5->scroll down
+*/
 
 

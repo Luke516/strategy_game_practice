@@ -13,8 +13,8 @@
 
 Renderer::Renderer(MyWindow* w):
 		fovy(45.0),z_near(0.1),light(5),window_proportion(4.0f / 3.0f),
-		camera_position(12,12,-24),camera_lookat_position(0,0,0),camera_up(0,1,0),
-		projection_matrix(glm::perspective(fovy, window_proportion, z_near, 100.0f)),
+		camera_position(0,50,1),camera_lookat_position(0,0,0),camera_up(0,1,0),
+		projection_matrix(glm::perspective(fovy, window_proportion, z_near, 500.0f)),
 		view_matrix (glm::lookAt(camera_position,camera_lookat_position,camera_up)),
 		lightColor(255,0,0),LightPosition_worldspace(2,2,0)
 {
@@ -99,4 +99,41 @@ void Renderer::resize(){
 	window_proportion = (float)w/h;
 	projection_matrix = glm::mat4(glm::perspective(fovy, window_proportion, z_near, 100.0f));
 	pv_matrix = projection_matrix*view_matrix;
+}
+
+void Renderer::cameraScale(float dis){
+	glm::vec3 view = camera_lookat_position - camera_position;
+	view = glm::normalize(view);
+	camera_position = camera_position + view * (GLfloat)(dis);
+	view_matrix = glm::lookAt(camera_position,camera_lookat_position,camera_up);
+	pv_matrix = projection_matrix * view_matrix;
+}
+
+void Renderer::cameraTranslate(bool parallel, float dis){
+	glm::vec3 view = camera_lookat_position - camera_position;
+	glm::vec3 dir_parallel = glm::cross(view, camera_up);
+	dir_parallel = glm::normalize(dir_parallel);
+
+	if(parallel){
+		camera_position = camera_position + dir_parallel * dis;
+		camera_lookat_position = camera_lookat_position + dir_parallel * dis;
+	}
+	else{
+		glm::vec3 dir_vertical = glm::cross(view, dir_parallel);
+		dir_vertical = glm::normalize(dir_vertical);
+		camera_position = camera_position + dir_vertical * dis;
+		camera_lookat_position = camera_lookat_position + dir_vertical * dis;
+	}
+
+	view_matrix = glm::lookAt(camera_position,camera_lookat_position,camera_up);
+	pv_matrix = projection_matrix * view_matrix;
+}
+
+void Renderer::keyActive(int key){
+	if(key == 'W')cameraTranslate(false, -1.0);
+	else if(key == 'S')cameraTranslate(false, 1.0);
+	else if(key == 'D')cameraTranslate(true, 1.0);
+	else if(key == 'A')cameraTranslate(true, -1.0);
+	else if(key == 'Q');
+	else if(key == 'E');
 }

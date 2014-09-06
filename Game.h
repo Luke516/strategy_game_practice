@@ -8,6 +8,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 #include <GLFW/glfw3.h>
+#include <ctime>
 #include "IOhandler.h"
 #include "MyWindow.h"
 
@@ -23,11 +24,12 @@ public:
 	void changeState();
 	void gameActive();
 	void initState();
-	void keyActive(char c);
+	void keyActive(int key, int action);
 	void mouseActive(int button, double x_pos, double y_pos);
 	void windowResize(int width, int height);
 	GLFWwindow* getWindow(){return window.getWindow();}
 private:
+	clock_t loop_start_time,loop_end_time,loop_elapsed_time;
 	bool terminate;
 	enum_state state;
 	enum_state next_state;

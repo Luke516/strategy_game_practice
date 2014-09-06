@@ -35,11 +35,24 @@ void IOhandler::render(){
 void IOhandler::update(){
 	keyboard.update();
 }
-void IOhandler::keyActive(char c){
-	keyboard.keyActive(c);
+void IOhandler::keyActive(int key, int action){
+	printf("key = %d = %c\n",key,key);
+	if(key == 'W' || key == 'A' || key == 'S' || key == 'D' || key == 'Q' || key == 'E'){
+		if(action != GLFW_RELEASE)renderer.keyActive(key);
+	}
+	else keyboard.keyActive(key, action);
 }
 void IOhandler::mouseActive(int button, double x_pos, double y_pos){
-	if(button != 0)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
+	if(button == 4 ){
+		renderer.cameraScale(2);
+		return;
+	}
+	if (button == -4) {
+		renderer.cameraScale(-2);
+		return;
+	}
+
+	if(button == 1)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
 
 	//printf("x:%f y:%f\n",x_pos,y_pos);
 	int window_height = window_ptr -> getWindowHeight();

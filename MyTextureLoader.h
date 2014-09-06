@@ -9,14 +9,21 @@
 #define MYTEXTURELOADER_H_
 
 #include <vector>
+#include <string>
 #include <windows.h>
 #include <wingdi.h>
+#include <map>
 
 class MyTextureLoader {
 public:
 	MyTextureLoader();
 	~MyTextureLoader();
-	static unsigned int LoadTexture(const char* path);
+	unsigned int LoadTexture(const char* path);
+	bool path_exist(std::string key);
+private:
+	unsigned int count;
+	std::map<std::string,unsigned int> path_map;
+	std::vector<unsigned int> id_list;
 };
 
 #endif /* MYTEXTURELOADER_H_ */

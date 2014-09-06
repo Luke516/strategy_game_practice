@@ -17,12 +17,13 @@ public:
 	Ship(float xx=0, float yy=0, float zz=0);
 	void render(Renderer* renderer);
 	void update();
-	void keyActive(char c);
+	void keyActive(int key, int action);
 	float mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
 	void setMode(int button);
 	int getMode(){return mode;}
 private:
 	float x,y,z;
+	int map_x,map_y;
 	int mode;// 0->none 1->touched 2->selected
 	std::vector<float> obj_vertex;
 	std::vector<float> obj_uv;

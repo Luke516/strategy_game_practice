@@ -16,7 +16,7 @@ class KeyBoard {
 public:
 	KeyBoard();
 	void update();
-	void keyActive(char c);
+	void keyActive(int key, int action);
 	void mouseActive(int button, glm::vec3 pos, glm::vec3 dir  );
 	void push(BasicObject *np);
 	void clear();

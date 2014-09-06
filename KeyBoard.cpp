@@ -12,6 +12,9 @@ KeyBoard::KeyBoard() {
 }
 
 void KeyBoard::update(){
+	for (unsigned int i = 0; i < keyboard_list.size(); i++) {
+		keyboard_list[i]->update();
+	}
 	return;
 }
 
@@ -27,7 +30,7 @@ void KeyBoard::mouseActive(int button,glm::vec3 pos,glm::vec3 dir){
 }
 
 
-void KeyBoard::keyActive(char c){
+void KeyBoard::keyActive(int key, int action){
 
 }
 

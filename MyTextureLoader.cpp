@@ -11,8 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
-MyTextureLoader::MyTextureLoader() {
+MyTextureLoader::MyTextureLoader():count(0) {
 	// TODO Auto-generated constructor stub
 }
 
@@ -20,14 +21,29 @@ MyTextureLoader::~MyTextureLoader() {
 	// TODO Auto-generated destructor stub
 }
 
+bool MyTextureLoader::path_exist(std::string key){
+	return(path_map.find(key) != path_map.end() );
+}
+
 unsigned int MyTextureLoader::LoadTexture(const char* path) {
+
+	std::string path_string(path);
+
+	if(path_exist(path_string)){
+		unsigned int no = path_map[path_string];
+		unsigned int texture_id = id_list[no];
+		return texture_id;
+	}
+
+	path_map[path_string] = count++;
+
+	unsigned char * data;
 	// Data read from the header of the BMP file
 	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
 	unsigned int dataPos;     // Position in the file where the actual data begins
 	unsigned int width, height;
 	unsigned int imageSize;   // = width*height*3
 	// Actual RGB data
-	unsigned char * data;
 
 	FILE * file = fopen(path,"rb");
 	if (!file){
@@ -74,6 +90,7 @@ unsigned int MyTextureLoader::LoadTexture(const char* path) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	delete data;
+	id_list.push_back(texture_id);
 
 	return texture_id;
 }

@@ -23,7 +23,7 @@ public:
 	void render();
 	void update();
 	void resize(){renderer.resize();}
-	void keyActive(char c);
+	void keyActive(int key, int action);
 	void mouseActive(int button, double x_pos, double y_pos);
 private:
 	std::vector<BasicObject *>object_list;

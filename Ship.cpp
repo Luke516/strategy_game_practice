@@ -9,10 +9,9 @@
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include "Ship.h"
-#include "MyObjLoader.h"
-#include "MyTextureLoader.h"
+#include "GlobalLoaders.h"
 
-Ship::Ship(float xx, float yy,float zz):x(xx),y(yy),z(zz),mode(0),
+Ship::Ship(float xx, float yy,float zz):x(xx),y(yy),z(zz),mode(0),texture_unif(0),
 		model_matrix(glm::mat4(1.0f)),vbo_vertex(0),vbo_uv(0),vbo_normal(0)
 {
 	MyObjLoader::LoadObjFromFileWithAABB("ship00.obj", &obj_vertex, &obj_uv, &obj_normal,
@@ -29,15 +28,13 @@ Ship::Ship(float xx, float yy,float zz):x(xx),y(yy),z(zz),mode(0),
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_uv);
 	glBufferData(GL_ARRAY_BUFFER, obj_uv.size() * sizeof(float), &obj_uv[0],GL_STATIC_DRAW);
 
-	texture_id = MyTextureLoader::LoadTexture("2.bmp");
+	texture_id = tex_loader.LoadTexture("2.bmp");
 
 	if (x || y || z) {
 		glm::vec3 translate_vector(x, y, z);
 		model_matrix = glm::translate(model_matrix, translate_vector);
 		glm::vec4 bl(aabb_bottom_left,1.0);
 		glm::vec4 tr(aabb_top_right,1.0);
-
-		///glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f)*glm::lookAt(glm::vec3(0,0,20),glm::vec3(0,0,0),glm::vec3(0,1,0))
 
 		bl = model_matrix * bl;
 		tr = model_matrix * tr;
@@ -58,8 +55,15 @@ void Ship::render(Renderer* renderer){
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	glBindTexture(GL_TEXTURE_2D,texture_id);
-	renderer->setUniform(model_matrix,0,mode);
+	renderer->setUniform(model_matrix, texture_unif ,mode);
 	glDrawArrays(GL_TRIANGLES, 0, obj_vertex.size());
+}
+
+void Ship::update(){
+	/*z += 0.1;
+	glm::vec3 translate_vector(0,0,0.1);
+	model_matrix = glm::translate(model_matrix, translate_vector);*/
+	return;
 }
 
 float Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
@@ -91,4 +95,8 @@ float Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 
 void Ship::setMode(int button){
 	mode = button;
+}
+
+void Ship::keyActive(int key, int action){
+
 }
