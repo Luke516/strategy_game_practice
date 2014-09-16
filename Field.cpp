@@ -7,11 +7,12 @@
 
 #include <cstdio>
 #include "Field.h"
+#include "HexCoordinate.h"
 
 
-Field::Field():map()
+Field::Field():map(),turn_counter(ship_list),path_finder(&map)
 {
-	Ship new_ship(0,2,0);
+	Ship new_ship(5,0,map.getUnitLen());
 	ship_list.push_back(new_ship);
 }
 
@@ -20,6 +21,7 @@ Field::~Field(){
 }
 
 void Field::render(Renderer *renderer){
+	turn_counter.render(renderer);
 	map.render(renderer);
 	for(unsigned int i=0; i<ship_list.size(); i++){
 		ship_list[i].render(renderer);
@@ -41,7 +43,7 @@ void Field::keyActive(int key, int action){
 
 void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 
-	if (button != 0) {//click an object
+	if (button == 1) {//click an object
 		for (unsigned int i = 0; i < selected_list.size(); i++) {
 			ship_list[selected_list[i]].setMode(0);//clear previous selected
 			selected_list.clear();
@@ -52,6 +54,18 @@ void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 			selected_list.push_back(touched_list[i]);
 		}
 		map.setMode(2);
+		return;
+	}
+	else if(button ==2){
+		printf("Button : 2!!!\n");
+		unsigned int no;
+		HexCoordinate start(0,0),end(0,0);
+		end = map.getTouchedCoordinate();
+		for(unsigned int i=0; i<selected_list.size(); i++){
+			no = selected_list[i];
+			start = ship_list[no].getCoordinate();
+			path_finder.findPath(start,end,ship_list[no]);
+		}
 		return;
 	}
 
@@ -65,6 +79,7 @@ void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 
 	float t,tmin(-1.0);
 	unsigned int selected_ship = 0;
+
 	if(dir[0]==0)dir[0]=0.00001;
 	if(dir[1]==0)dir[1]=0.00001;
 	if(dir[2]==0)dir[2]=0.00001;

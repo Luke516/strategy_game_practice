@@ -20,7 +20,7 @@ public:
 	void init();
 	void render();
 	void clear();
-	void setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode=0);
+	void setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode=0, bool three_d=true);
 	void push(BasicObject *np);
 	void useProgram(unsigned int id);
 	void resize();

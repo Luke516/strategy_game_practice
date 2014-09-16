@@ -20,6 +20,8 @@ Renderer::Renderer(MyWindow* w):
 {
 	pv_matrix = projection_matrix*view_matrix;
 	window = w;
+	//window_proportion = w->getWindowWidth()/w->getWindowHeight(); -- int!!!
+	//projection_matrix = glm::perspective(fovy, window_proportion, z_near, 500.0f);
 }
 
 void Renderer::init() {
@@ -69,7 +71,7 @@ void Renderer::render(){
 	return;
 }
 
-void Renderer::setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode){
+void Renderer::setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int mode,bool three_d){
 	if(mode == 0)light = 5;
 	else if(mode ==1)light = 10;
 	else if(mode ==2)light = 20;
@@ -79,9 +81,18 @@ void Renderer::setUniform(glm::mat4 model_matrix, unsigned int texture_unif,int 
 
 	glm::mat4 MVP = pv_matrix * model_matrix;
 
-	glUniformMatrix4fv(matrix_location, 1, GL_FALSE, &MVP[0][0]);
 	glUniformMatrix4fv(model_matrix_location, 1, GL_FALSE, &model_matrix[0][0]);
-	glUniformMatrix4fv(view_matrix_location, 1, GL_FALSE, &view_matrix[0][0]);
+
+	if(three_d){
+		glUniformMatrix4fv(matrix_location, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(view_matrix_location, 1, GL_FALSE, &view_matrix[0][0]);
+	}
+	else {
+		glm::mat4 identity_matrix(1.0);
+		MVP = projection_matrix * identity_matrix * model_matrix;
+		glUniformMatrix4fv(matrix_location, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(view_matrix_location, 1, GL_FALSE, &identity_matrix[0][0]);
+	}
 	glUniform3fv(light_color_location, 1, &lightColor[0]);
 	glUniform3fv(light_position_location, 1, &LightPosition_worldspace[0]);
 	glUniform1f(light_location, light);

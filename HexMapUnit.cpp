@@ -11,7 +11,7 @@
 #include "HexMapUnit.h"
 #include "GlobalLoaders.h"
 
-HexMapUnit::HexMapUnit(int xx, int yy, float lenn):mode(0),x(xx),y(yy),len(lenn),texture_unif(0)
+HexMapUnit::HexMapUnit(int xx, int yy, float lenn):mode(0),coordinate(xx,yy),len(lenn),texture_unif(0)
 {
 	obj_loader.LoadObjFromFile("hex00.obj",&obj_vertex,&obj_uv,&obj_normal);
 	glGenBuffers(1, &vbo_vertex);
@@ -31,15 +31,11 @@ HexMapUnit::HexMapUnit(int xx, int yy, float lenn):mode(0),x(xx),y(yy),len(lenn)
 
 	texture_id = tex_loader.LoadTexture("hex_tex.bmp");
 
-	if( x || y){
-		//glm::vec3 translate_vector(10*x , 0.0, 10*y);
-		//glm::vec3 translate_vector(x*len*1.5 , 0.0, y*1.73205*len+abs(x%2)*(1.73205*len/2));
-		glm::vec3 translate_vector(x*len*1.5 , 0.0, y*1.73205*len - x*(1.73205*len/2) );
-		model_matrix = glm::translate(model_matrix, translate_vector);
-	}
-	else{
-		//mode = 2;
-	}
+	//glm::vec3 translate_vector(10*x , 0.0, 10*y);
+	//glm::vec3 translate_vector(x*len*1.5 , 0.0, y*1.73205*len+abs(x%2)*(1.73205*len/2));
+	glm::vec3 translate_vector(xx * len * 1.5, 0.0,yy * 1.73205 * len - xx * (1.73205 * len / 2));
+	model_matrix = glm::translate(model_matrix, translate_vector);
+
 }
 
 void HexMapUnit::render(Renderer* renderer){

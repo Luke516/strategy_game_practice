@@ -9,9 +9,11 @@
 #define FIELD_H_
 #include <vector>
 #include "Ship.h"
+#include "TurnCounter.h"
 #include "HexMap.h"
 #include "Renderer.h"
 #include "BasicObject.h"
+#include "PathFinder.h"
 
 class Field:public BasicObject {
 public:
@@ -23,9 +25,11 @@ public:
 	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
 private:
 	HexMap map;
+	PathFinder path_finder;
 	std::vector<Ship> ship_list;
 	std::vector<unsigned int> touched_list;
 	std::vector<unsigned int> selected_list;
+	TurnCounter turn_counter;
 };
 
 #endif /* FIELD_H_ */

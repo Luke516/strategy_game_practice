@@ -11,10 +11,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "HexMapUnit.h"
+#include "HexCoordinate.h"
 
 class Renderer;
 
-class HexMap {
+class HexMap{
 public:
 	HexMap(int w=12, int h=12, float len=4.0f);
 	void update();
@@ -22,6 +23,11 @@ public:
 	void keyActive(int key, int action);
 	float mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
 	void setMode(int next_mode);
+	float getUnitLen(){return unit_len;}
+	int getWidth(){return width;}
+	int getHeight(){return height;}
+	HexCoordinate getTouchedCoordinate();
+	HexCoordinate getSelectedCoordinate();
 private:
 	int selected;
 	int touched;

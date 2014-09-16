@@ -47,45 +47,49 @@ void IOhandler::mouseActive(int button, double x_pos, double y_pos){
 		renderer.cameraScale(2);
 		return;
 	}
-	if (button == -4) {
+	else if (button == -4) {
 		renderer.cameraScale(-2);
 		return;
 	}
 
-	if(button == 1)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
+	else if(button == 1)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
+	else if(button == 2)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
 
-	//printf("x:%f y:%f\n",x_pos,y_pos);
-	int window_height = window_ptr -> getWindowHeight();
-	int window_width = window_ptr -> getWindowWidth();
-	//printf("window_height: %d  window_width: %d\n",window_height,window_width);
-	GLfloat x = (x_pos/window_width)*2 - 1;
-	GLfloat y = (y_pos/window_height)*2 - 1;///??!!
-	//printf("x=%f y=%f\n",x,y);
-	GLfloat z_near = renderer.getZnear();
-	GLfloat rad = renderer.getFovy()/180 *3.1415926;
+	else {
 
-	glm::vec3 camera_up = renderer.getCameraUp();
-	glm::vec3 camera_position = renderer.getCameraPosition();
-	glm::vec3 camera_look_at_posiotion = renderer.getCameraLookAtPosition();
-	glm::vec3 view = camera_look_at_posiotion - camera_position;
-	glm::vec3 w = glm::cross(view, camera_up);
-	glm::vec3 h = glm::cross(view, w);
+		//printf("x:%f y:%f\n",x_pos,y_pos);
+		int window_height = window_ptr->getWindowHeight();
+		int window_width = window_ptr->getWindowWidth();
+		//printf("window_height: %d  window_width: %d\n",window_height,window_width);
+		GLfloat x = (x_pos / window_width) * 2 - 1;
+		GLfloat y = (y_pos / window_height) * 2 - 1;	///??!!
+		//printf("x=%f y=%f\n",x,y);
+		GLfloat z_near = renderer.getZnear();
+		GLfloat rad = renderer.getFovy() / 180 * 3.1415926;
 
-	w = glm::normalize(w);
-	h = glm::normalize(h);
-	//printf("w: %f, %f, %f\n",w[0],w[1],w[2]);
-	//printf("h: %f, %f, %f\n",h[0],h[1],h[2]);
+		glm::vec3 camera_up = renderer.getCameraUp();
+		glm::vec3 camera_position = renderer.getCameraPosition();
+		glm::vec3 camera_look_at_posiotion = renderer.getCameraLookAtPosition();
+		glm::vec3 view = camera_look_at_posiotion - camera_position;
+		glm::vec3 w = glm::cross(view, camera_up);
+		glm::vec3 h = glm::cross(view, w);
 
-	view = glm::normalize(view);
+		w = glm::normalize(w);
+		h = glm::normalize(h);
+		//printf("w: %f, %f, %f\n",w[0],w[1],w[2]);
+		//printf("h: %f, %f, %f\n",h[0],h[1],h[2]);
 
-	GLfloat h_length = tan( rad / 2 ) * z_near;
-	GLfloat w_length = h_length * window_width / window_height;
-	h = h * h_length;
-	w = w * w_length;
-	glm::vec3 pos = camera_position + view * z_near + h * y + w * x;
-	glm::vec3 dir = pos - camera_position;
-	//printf("pos: %f,%f,%f  dir:%f %f %f\n",pos[0],pos[1],pos[2],dir[0],dir[1],dir[2]);
+		view = glm::normalize(view);
 
-	keyboard.mouseActive(button, pos, dir);
+		GLfloat h_length = tan(rad / 2) * z_near;
+		GLfloat w_length = h_length * window_width / window_height;
+		h = h * h_length;
+		w = w * w_length;
+		glm::vec3 pos = camera_position + view * z_near + h * y + w * x;
+		glm::vec3 dir = pos - camera_position;
+		//printf("pos: %f,%f,%f  dir:%f %f %f\n",pos[0],pos[1],pos[2],dir[0],dir[1],dir[2]);
+
+		keyboard.mouseActive(button, pos, dir);
+	}
 
 }

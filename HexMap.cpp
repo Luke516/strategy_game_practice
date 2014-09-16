@@ -16,10 +16,10 @@ HexMap::HexMap(int w, int h, float len):selected(-1),touched(-1),
 	int x,y,offset;
 	for(int i=0;i<width;i++){
 		offset = i/2;
+		x = i;
 		for(int j=0;j<height;j++){
 			//x = i - (w+1)/2;
 			//y = j + ((h-1)/2) - (h-j-1)/2;
-			x = i;
 			y = j + offset;
 			map_unit_list.push_back(HexMapUnit(x,y,unit_len));
 			//map_unit_list.push_back(HexMapUnit(i,j,unit_len));
@@ -88,4 +88,12 @@ void HexMap::setMode(int next_mode){
 		selected = touched;
 		if(touched >= 0)map_unit_list[touched].setMode(2);
 	}
+}
+
+HexCoordinate HexMap::getTouchedCoordinate(){
+	return map_unit_list[touched].getCoordinate();
+}
+
+HexCoordinate HexMap::getSelectedCoordinate(){
+	return map_unit_list[selected].getCoordinate();
 }

@@ -19,6 +19,7 @@
 #include "Renderer.h"
 #include "KeyBoard.h"
 #include "Game.h"
+#include "HexCoordinate.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -46,6 +47,13 @@ void myMouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 		mouse_left_button_pressed = false;
 		//game_ptr->mouseActive(-1,0,0);
 	}
+	else if(button == GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS){
+		mouse_left_button_pressed = true;
+		game_ptr->mouseActive(2,0,0);
+	}
+	else if (button == GLFW_MOUSE_BUTTON_2 && action == GLFW_RELEASE) {
+		mouse_left_button_pressed = false;
+	}
 }
 
 void myScrollCallback(GLFWwindow *window, double xoffset, double yoffset){
@@ -70,6 +78,12 @@ void myWindowResizeCallback(GLFWwindow *window, int width, int hieght){
 
 
 int main() {
+	/* test
+	HexCoordinate a(1,2),b(5,9),c,d;
+	c = a+b;
+	d = a+c;
+	if(a.getX()+b.getX()==c.getX() && a.getY()+b.getY()==c.getY())printf("WOWOWOWOW!!!\n");
+	*/
 
 	if (!glfwInit()) {
 		printf("ERROR: could not start GLFW3\n");

@@ -11,9 +11,15 @@
 #include "Ship.h"
 #include "GlobalLoaders.h"
 
-Ship::Ship(float xx, float yy,float zz):x(xx),y(yy),z(zz),mode(0),texture_unif(0),
-		model_matrix(glm::mat4(1.0f)),vbo_vertex(0),vbo_uv(0),vbo_normal(0)
+Ship::Ship(float map_x, float map_y, float map_unit_len):
+		coordinate(map_x,map_y),mode(0),texture_unif(0),
+		model_matrix(glm::mat4(1.0f)),vbo_vertex(0),vbo_uv(0),vbo_normal(0),
+		ap_per_turn(5),ap(0)
 {
+	x = map_x * map_unit_len * 1.5;
+	z = (map_y + map_x/2) * map_unit_len * 1.73205;
+	y = 2.0f;
+
 	MyObjLoader::LoadObjFromFileWithAABB("ship00.obj", &obj_vertex, &obj_uv, &obj_normal,
 			&aabb_bottom_left, &aabb_top_right);
 	glGenBuffers(1, &vbo_vertex);
@@ -64,6 +70,10 @@ void Ship::update(){
 	glm::vec3 translate_vector(0,0,0.1);
 	model_matrix = glm::translate(model_matrix, translate_vector);*/
 	return;
+}
+
+void Ship::addOrder(Order *order){
+	order_list.push_back(order);
 }
 
 float Ship::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){

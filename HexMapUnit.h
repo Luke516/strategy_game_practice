@@ -11,16 +11,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Renderer.h"
+#include "HexCoordinate.h"
 
 class HexMapUnit {
 public:
 	HexMapUnit(int xx, int yy, float lenn);
 	void render(Renderer *renderer);
 	void setMode(int next_mode);
+	HexCoordinate getCoordinate(){return coordinate;}
 private:
+	HexCoordinate coordinate;
 	int mode;
-	int x;
-	int y;
 	float len;
 	std::vector<float> obj_vertex;
 	std::vector<float> obj_uv;
