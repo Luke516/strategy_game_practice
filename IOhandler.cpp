@@ -52,8 +52,8 @@ void IOhandler::mouseActive(int button, double x_pos, double y_pos){
 		return;
 	}
 
-	else if(button == 1)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
-	else if(button == 2)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0));
+	else if(button == 1)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0),x_pos,y_pos);
+	else if(button == 2)keyboard.mouseActive(button,glm::vec3(0,0,0),glm::vec3(0,0,0),x_pos,y_pos);
 
 	else {
 
@@ -89,7 +89,6 @@ void IOhandler::mouseActive(int button, double x_pos, double y_pos){
 		glm::vec3 dir = pos - camera_position;
 		//printf("pos: %f,%f,%f  dir:%f %f %f\n",pos[0],pos[1],pos[2],dir[0],dir[1],dir[2]);
 
-		keyboard.mouseActive(button, pos, dir);
+		keyboard.mouseActive(button, pos, dir, x_pos, y_pos);
 	}
-
 }

@@ -5,6 +5,7 @@
  *      Author: LukeWu
  */
 
+#include <cstdio>
 #include "Order.h"
 #include "PathFinder.h"
 
@@ -13,18 +14,22 @@ Order::~Order(){
 }
 
 MoveOrder::MoveOrder(PathNode &node){
+	setApCost(1);
 	x = node.getCoordinate().getX();
 	y = node.getCoordinate().getY();
 }
 
-void MoveOrder::active(Ship *ship){
-	//ship -> move(x,y);
+bool MoveOrder::active(Ship *ship){
+	if(ship -> getAP() < getApCost() ) return false;
+	printf("move to : %d %d\n",x,y);
+	ship -> move(x,y);
+	return true;
 }
 
-void AttackOrder::active(Ship *ship){
-
+bool AttackOrder::active(Ship *ship){
+	return false;
 }
 
-void PatrolOrder::active(Ship *ship){
-
+bool PatrolOrder::active(Ship *ship){
+	return false;
 }

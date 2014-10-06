@@ -7,6 +7,7 @@
 
 #ifndef HEXCOORDINATE_H_
 #define HEXCOORDINATE_H_
+#include <cstdio>
 
 class HexCoordinate {
 public:
@@ -15,6 +16,7 @@ public:
 	int getY()const {return y;}
 	int getDis(HexCoordinate target);
 	bool operator == (const HexCoordinate &a)const;
+	void printContent(){printf("coordinate x:%d y:%d\n",x,y);}
 	HexCoordinate operator +(HexCoordinate a);
 private:
 	int x,y;

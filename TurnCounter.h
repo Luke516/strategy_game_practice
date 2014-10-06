@@ -17,9 +17,11 @@ public:
 	TurnCounter(std::vector<Ship> &list);
 	void render(Renderer *renderer);
 	void update();
-	void keyActive(int key, int action);
-	void mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
+	void keyActive(int key);
+	float mouseActive(int button, int x_pos, int y_pos);
+	void setMode(int next_mode){mode = next_mode;}
 private:
+	bool avilible;
 	int mode;
 	std::vector<Ship> &ship_list;
 	std::vector<float> obj_vertex;

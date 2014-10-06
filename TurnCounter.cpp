@@ -5,14 +5,14 @@
  *      Author: LukeWu
  */
 
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include "TurnCounter.h"
 #include "GlobalLoaders.h"
 
-TurnCounter::TurnCounter(std::vector<Ship> &list):ship_list(list),texture_unif(0),mode(1)
+TurnCounter::TurnCounter(std::vector<Ship> &list):
+	avilible(true),mode(1),ship_list(list),texture_unif(0)
 {
 	obj_loader.LoadObjFromFile("hex01.obj",&obj_vertex,&obj_uv,&obj_normal);
 	glGenBuffers(1, &vbo_vertex);
@@ -32,8 +32,8 @@ TurnCounter::TurnCounter(std::vector<Ship> &list):ship_list(list),texture_unif(0
 
 	texture_id = tex_loader.LoadTexture("turn_counter_tex.bmp");
 	//model_matrix = glm::rotate(model_matrix, 120.0f, glm::vec3(0,0,1));
-	model_matrix = glm::scale(model_matrix , glm::vec3(0.4,0.4,1));
-	model_matrix = glm::translate(model_matrix, glm::vec3(1.8,-1.2,0));
+	model_matrix = glm::scale(model_matrix , glm::vec3(1,1,1));
+	model_matrix = glm::translate(model_matrix, glm::vec3(1.1,-0.75,0));
 }
 
 void TurnCounter::render(Renderer* renderer){
@@ -50,4 +50,19 @@ void TurnCounter::render(Renderer* renderer){
 	glBindTexture(GL_TEXTURE_2D,texture_id);
 	renderer->setUniform(model_matrix, texture_unif,mode,false);
 	glDrawArrays(GL_TRIANGLES, 0, obj_vertex.size());
+}
+
+
+float TurnCounter::mouseActive(int button, int x_pos, int y_pos){
+
+	return -1.0;
+}
+
+void TurnCounter::keyActive(int key){
+	if(key == 'N'){
+		for(unsigned int i=0; i<ship_list.size(); i++){
+			ship_list[i].addAP();
+		}
+	}
+	return;
 }

@@ -17,7 +17,7 @@ public:
 	KeyBoard();
 	void update();
 	void keyActive(int key, int action);
-	void mouseActive(int button, glm::vec3 pos, glm::vec3 dir  );
+	void mouseActive(int button, glm::vec3 pos, glm::vec3 dir, int x_pos, int y_pos );
 	void push(BasicObject *np);
 	void clear();
 private:

@@ -22,7 +22,7 @@ public:
 	virtual void render(Renderer *renderer);
 	virtual void update();
 	virtual void keyActive(int key, int action);
-	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir);
+	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir,int x_pos,int y_pos);
 private:
 	HexMap map;
 	PathFinder path_finder;

@@ -19,7 +19,7 @@ public:
 	virtual void render(Renderer *renderer)=0;
 	virtual void update()=0;
 	virtual void keyActive(int key, int action)=0;
-	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir)=0;
+	virtual void mouseActive(int button, glm::vec3 pos, glm::vec3 dir,int x_pos, int y_pos)=0;
 };
 
 #endif /* BASICOBJECT_H_ */

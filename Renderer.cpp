@@ -12,7 +12,7 @@
 #include "MyShader.h"
 
 Renderer::Renderer(MyWindow* w):
-		fovy(45.0),z_near(0.1),light(5),window_proportion(4.0f / 3.0f),
+		fovy(60.0),z_near(0.1),light(5),window_proportion(4.0f / 3.0f),
 		camera_position(0,50,1),camera_lookat_position(0,0,0),camera_up(0,1,0),
 		projection_matrix(glm::perspective(fovy, window_proportion, z_near, 500.0f)),
 		view_matrix (glm::lookAt(camera_position,camera_lookat_position,camera_up)),

@@ -15,10 +15,11 @@ HexCoordinate::HexCoordinate(int xx,int yy) :x(xx),y(yy)
 
 int HexCoordinate::getDis(HexCoordinate target){
 	int x2 = target.getX();
-	int y2 = target.getY();
-	int z = -(x+y);
+	int y2 = -target.getY();
+	int y1 = -y;
+	int z = -(x+y1);
 	int z2 = -(x2+y2);
-	return (abs(x - x2) + abs(y - y2) + abs(z - z2)) / 2;
+	return (abs(x - x2) + abs(y1 - y2) + abs(z - z2)) / 2;
 }
 
 bool HexCoordinate::operator == (const HexCoordinate &a)const{

@@ -16,7 +16,7 @@
 class PathNode{
 public:
 	PathNode(HexCoordinate coord = HexCoordinate(0,0), int dis=0, int cost=0, int p=0);
-	const int getScore()const {return distance_to_target + current_cost;}
+	const int getScore()const {return distance_to_target*2 + current_cost;}
 	const int getCost()const {return current_cost;}
 	const int getParent()const {return parent;}
 	const HexCoordinate getCoordinate()const {return coordinate;}

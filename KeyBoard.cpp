@@ -22,15 +22,17 @@ void KeyBoard::push(BasicObject* np){
 	keyboard_list.push_back(np);
 }
 
-void KeyBoard::mouseActive(int button,glm::vec3 pos,glm::vec3 dir){
+void KeyBoard::mouseActive(int button,glm::vec3 pos,glm::vec3 dir, int x_pos, int y_pos){
 	for (unsigned int i = 0; i < keyboard_list.size(); i++) {
-		keyboard_list[i]->mouseActive(button, pos, dir);
+		keyboard_list[i]->mouseActive(button, pos, dir, x_pos, y_pos);
 	}
 	return;
 }
 
 
 void KeyBoard::keyActive(int key, int action){
-
+	for (unsigned int i = 0; i < keyboard_list.size(); i++) {
+		keyboard_list[i]-> keyActive(key, action);
+	}
 }
 

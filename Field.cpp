@@ -12,7 +12,7 @@
 
 Field::Field():map(),turn_counter(ship_list),path_finder(&map)
 {
-	Ship new_ship(5,0,map.getUnitLen());
+	Ship new_ship(5,5,map.getUnitLen());
 	ship_list.push_back(new_ship);
 }
 
@@ -38,10 +38,13 @@ void Field::update(){
 }
 
 void Field::keyActive(int key, int action){
+	if(key == 'N' && action == GLFW_PRESS ){
+		turn_counter.keyActive(key);
+	}
 	return;
 }
 
-void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
+void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir, int x_pos, int y_pos){
 
 	if (button == 1) {//click an object
 		for (unsigned int i = 0; i < selected_list.size(); i++) {
@@ -63,6 +66,7 @@ void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 		end = map.getTouchedCoordinate();
 		for(unsigned int i=0; i<selected_list.size(); i++){
 			no = selected_list[i];
+			ship_list[no].clearOrder();
 			start = ship_list[no].getCoordinate();
 			path_finder.findPath(start,end,ship_list[no]);
 		}
@@ -77,13 +81,14 @@ void Field::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 	touched_list.clear();
 	map.setMode(0);
 
-	float t,tmin(-1.0);
+	float t(-1),tmin(-1.0);
 	unsigned int selected_ship = 0;
 
 	if(dir[0]==0)dir[0]=0.00001;
 	if(dir[1]==0)dir[1]=0.00001;
 	if(dir[2]==0)dir[2]=0.00001;
 
+	t = turn_counter.mouseActive(button,x_pos,y_pos);
 	for(unsigned int i=0; i<ship_list.size(); i++){
 		t = ship_list[i].mouseActive(button, pos, dir);
 		if((tmin<0 || t<tmin) && t>0)selected_ship = i+1;

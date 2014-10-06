@@ -64,10 +64,10 @@ float HexMap::mouseActive(int button, glm::vec3 pos, glm::vec3 dir){
 		}
 
 		if(ii>-10 && ii<10 &&jj>-10 && jj<10){
-			printf("t=%f x=%f z=%f\n",t,x,z);
-			printf("i=%f ii=%d\nj=%f jj=%d\n",i,ii,j,jj);
-			printf("touched_x=%d touched_y=%d\n",touched_x,touched_y);
-			printf("no_x=%d no_y=%d\n",no_x,no_y);
+			//printf("t=%f x=%f z=%f\n",t,x,z);
+			//printf("i=%f ii=%d\nj=%f jj=%d\n",i,ii,j,jj);
+			//printf("touched_x=%d touched_y=%d\n",touched_x,touched_y);
+			//printf("no_x=%d no_y=%d\n",no_x,no_y);
 		}
 
 	}
